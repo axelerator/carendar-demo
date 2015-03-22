@@ -1,0 +1,51 @@
+@import 'carendar'
+
+body, *
+  font-family: 'Open Sans', sans-serif
+
+.month-view
+  margin-left: 510px
+.my-calendar.month
+  float: left
+  width: 500px
+
+.week-view
+  margin-right: 610px
+.my-calendar.week
+  float: right
+  width: 700px
+
+
+.my-calendar
+  +carendar(500px, 60px, 5)
+  .day
+    border-left: 1px solid #EEE
+    border-top: 1px solid #EEE
+
+    > div
+      background-color: #EEE
+      text-align: center
+      font-size: 10pt
+      color: #999
+
+  .item
+    border: 1px solid #DDD
+    background-color: #EEE
+    font-size: 8pt
+    z-index: 5
+    &:hover
+      z-index: 10
+
+    &.important
+      background-color: #FEE
+
+
+  &.month .day .items .item
+    &:hover
+      position: absolute
+      width: 100px
+      height: 30px
+      border-radius: 0
+      > .title
+        display: block
+

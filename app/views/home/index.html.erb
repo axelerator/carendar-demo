@@ -1,0 +1,62 @@
+<%= carendar @calendar_month, class: 'my-calendar month' do |item| %>
+<div class="title"><%=item[:title]%></div>
+<% end %>
+<div class="month-view">
+  <h1>Carender - simple, pure CSS calendar style display of dates </h1>
+  <p>
+      This is the demo app for the Ruby on Rails GEM <em>carendar</em>
+      <br/>
+      Resources:
+      <ul>
+        <li><a href="https://github.com/axelerator/carendar">Source at github</a></li>
+        <li><a href="https://rubygems.org/gems/carendar">Gem at rubygems.org</a></li>
+
+      </ul>
+      <p>The carender helper layouts simple markup for events and allows customization
+         of the rendering of the individual events.</p>
+      <pre>
+      &lt;%= carendar @calendar_month, class: 'my-calendar month' do |item| %&gt;
+        &lt;div class="title"&gt;&lt;%=item[:title]%&gt;&lt;/div&gt;
+      &lt;% end %&gt;
+      </pre>
+  </p>
+  <h2>Month view</h2>
+  <p>The markup is the same for week and month view. In month-view items are collapsed to
+  small, fixed sized dots save space. The days are displayed with a fixed height per day.
+  The final height depends on the amount of weeks rendered.
+  </p>
+</div>
+<br style="clear: both"/>
+<%= carendar @calendar_week, class: 'my-calendar week' do |item| %>
+  <div class="title"><%=item[:title]%></div>
+<% end %>
+<div class="week-view">
+  <h2>Week view</h2>
+  <p>Week view is also rendered with a fixed height per day, which can be passed separately to
+      the carendar sass mixin. The calendar objects are constructed with a very simple array of hashes for the events. The action for this view is constructed as follows:</p>
+  <pre>
+  def index
+    r = Random.new(125)
+    week = DateTime.now.beginning_of_week
+    ungrouped_items = 40.times.map do |i|
+      day = r.rand(12).to_i
+      s_time = r.rand(265).to_i
+      e_time = r.rand([268 - s_time - 1, 60].min + 15).to_i + 1 + s_time
+      opts = { title: Faker::Lorem.words(2).join(" ") }
+      if s_time.even?
+        opts[:class] = 'important' # separate classes can be passed to single events
+                                   # for individual styling
+      end
+      {
+        starts_at: week + day.days + (5* s_time).minutes,
+        ends_at: week + day.days + (5*e_time).minutes,
+        options: opts
+      }
+    end
+    @calendar_month = Carendar::Calendar.new(DateTime.now.beginning_of_month, DateTime.now.end_of_month, ungrouped_items)
+    @calendar_week = Carendar::Calendar.new(DateTime.now.beginning_of_week, DateTime.now.end_of_week, ungrouped_items)
+  end
+
+  </pre>
+</div>
+
