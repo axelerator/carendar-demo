@@ -53,8 +53,10 @@
         options: opts
       }
     end
-    @calendar_month = Carendar::Calendar.new(DateTime.now.beginning_of_month, DateTime.now.end_of_month, ungrouped_items)
-    @calendar_week = Carendar::Calendar.new(DateTime.now.beginning_of_week, DateTime.now.end_of_week, ungrouped_items)
+    @calendar_month = Carendar::Calendar.new(DateTime.now.beginning_of_month, 
+                                             DateTime.now.end_of_month, ungrouped_items)
+    @calendar_week = Carendar::Calendar.new(DateTime.now.beginning_of_week,
+                                            DateTime.now.end_of_week, ungrouped_items)
   end
 
   </pre>
